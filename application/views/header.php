@@ -8,6 +8,7 @@
 <?=link_tag(css_url().'login.css');?>
 <?=link_tag(css_url().'map/user/user.css');?>
 <?=link_tag(css_url().'game/game.css');?>
+
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="<?= js_url() ?>map.js"></script>
@@ -31,8 +32,8 @@
 					<li class="dropdown">
 						<a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">網路設定 <b class="caret"></b></a>
 						<ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-							<li role="presentation"><a role="menuitem" tabindex="-1" href="<?= base_url() ?>click/">有線網路</a></li>
-							<li role="presentation"><a role="menuitem" tabindex="-1" href="<?= base_url() ?>game/lottery">無線網路</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="<?= site_url() ?>/system/wire/">有線網路</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="<?= site_url() ?>/system/wireless">無線網路</a></li>
 							<li role="presentation" class="divider"></li>
 							<li role="presentation"><a role="menuitem" target="_blank" tabindex="-1" href="http://www.youtube.com/watch?v=vieVk_n2ECQ">喵喵叫</a></li>
 						</ul>
