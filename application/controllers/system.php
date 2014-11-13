@@ -35,6 +35,22 @@ class System extends CI_Controller {
 		if($this->current_user()===FALSE)return ;
 		$this->data['user'] = $this->current_user();
 
+		$this->data['network'] = $this->db->get('network');
+		$this->load->view('wire', $this->data);
+	}
+
+	public function new_network() {
+		$this->data['message'] = '';
+		$data = array(
+			'device' => $_POST['device'],
+			'dynamic_flag' => isset($_POST['dhcp']),
+			'ip_addr' => $_POST['ip-addr'],
+			'subnet_mask' => $_POST['mask'],
+			'gateway' => $_POST['gateway'],
+			'dns' => $_POST['dns']
+		);
+		$this->db->insert('network', $data);
+		$this->load->view('ajax', $this->data);
 	}
 
 	public function wireless() {
@@ -42,6 +58,18 @@ class System extends CI_Controller {
 		$this->data['user'] = $this->current_user();
 		$this->data['wpa_conf']=$this->db->get('ap_list');
 		$this->load->view('wireless', $this->data);
+	}
+
+	public function new_ap() {
+		$this->data['message'] = '';
+		$data = array(
+			'ssid' => $_POST['ssid'],
+			'type' => $_POST['type'],
+			'psk' => $_POST['psk'],
+			'priority' => intval($_POST['priority'])
+		);
+		$this->db->insert('ap_list', $data);
+		$this->load->view('ajax', $this->data);
 	}
 
 	private function current_user() {
@@ -65,6 +93,14 @@ class System extends CI_Controller {
 			$data = $this->parse_wpa();
 			foreach($data as $row) {
 				$this->db->insert('ap_list',$row);
+			}
+		}
+
+		$rows = $this->db->get('network');
+		if($rows->num_rows()==0) {
+			$data = $this->get_network();
+			foreach($data as $row) {
+				$this->db->insert('network',$row);
 			}
 		}
 	}
@@ -92,6 +128,28 @@ class System extends CI_Controller {
 				$i+=6;
 			}
 			else if($arr[$i]!='')show_error('error when parsing /etc/wpa1.conf'.$arr[$i]);
+		}
+		return $ret;
+	}
+
+	private function get_network() {
+		$devices = explode("\n",shell_exec("ifconfig -a | sed 's/[ \t].*//;/^\(lo\|\)$/d'"));
+		while(count($devices)>0 && end($devices)=="")array_pop($devices);
+		$ret = array();
+		foreach($devices as $dev) {
+			$flag = shell_exec("grep -E '$dev.*dhcp' /etc/network/interfaces | grep -v '#'");
+			$ip = shell_exec("ip addr show dev $dev | sed -nr 's/.*inet ([^ /]+).*/\\1/p'");
+			$mask = shell_exec("ifconfig $dev | sed -nr 's/.*Mask:([^ ]+).*/\\1/p'");
+			$gateway = '192.168.1.1';
+			$dns = shell_exec("cat /etc/resolv.conf | sed -nr 's/.*nameserver ([^ ]+).*/\\1/p'");
+			$ret[] = array(
+				'device' => $dev,
+				'dynamic_flag' => strlen($flag)>0,
+				'ip_addr' => $ip,
+				'subnet_mask' => $mask,
+				'gateway' => $gateway,
+				'dns' => $dns
+			);
 		}
 		return $ret;
 	}

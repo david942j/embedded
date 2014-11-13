@@ -11,7 +11,7 @@
 
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="<?= js_url() ?>map.js"></script>
+<script src="<?= js_url() ?>jquery.serialize-hash.js"></script>
 <script src="<?= js_url() ?>cards.js"></script>
 <script src="<?= js_url() ?>cookie.js"></script>
 <? if(isset($user)) {?>
@@ -32,7 +32,7 @@
 					<li class="dropdown">
 						<a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">網路設定 <b class="caret"></b></a>
 						<ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-							<li role="presentation"><a role="menuitem" tabindex="-1" href="<?= site_url() ?>/system/wire/">有線網路</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="<?= site_url() ?>/system/wire/">網路資訊</a></li>
 							<li role="presentation"><a role="menuitem" tabindex="-1" href="<?= site_url() ?>/system/wireless">無線網路</a></li>
 							<li role="presentation" class="divider"></li>
 							<li role="presentation"><a role="menuitem" target="_blank" tabindex="-1" href="http://www.youtube.com/watch?v=vieVk_n2ECQ">喵喵叫</a></li>
