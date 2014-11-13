@@ -78,6 +78,7 @@ class System extends CI_Controller {
 
 		$config['upload_path'] = './database/';
 		$config['allowed_types'] = '*';
+		$config['overwrite'] = TRUE;
 		$config['max_size']	= '10000';
 
 		$this->load->library('upload', $config);
@@ -88,6 +89,7 @@ class System extends CI_Controller {
 		}
 		else {
 			$data = array('upload_data' => $this->upload->data());
+			$this->db->reconnect();
 			$this->index();
 		}
 	}
