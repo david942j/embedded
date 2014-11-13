@@ -72,6 +72,26 @@ class System extends CI_Controller {
 		$this->load->view('ajax', $this->data);
 	}
 
+	public function import() {
+		if($this->current_user()===FALSE)return ;
+		$this->data['user'] = $this->current_user();
+
+		$config['upload_path'] = './database/';
+		$config['allowed_types'] = '*';
+		$config['max_size']	= '10000';
+
+		$this->load->library('upload', $config);
+
+		if ( ! $this->upload->do_upload()) {
+			$error = array('error' => $this->upload->display_errors());
+			show_error($this->upload->display_errors());
+		}
+		else {
+			$data = array('upload_data' => $this->upload->data());
+			$this->index();
+		}
+	}
+
 	private function current_user() {
 		$this->check_data_created();
 		$user = $this->session->userdata('username');
