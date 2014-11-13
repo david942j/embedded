@@ -46,11 +46,15 @@
 					<li class="">
 						<a><?= $user?></a>
 					</li>
+					<li class="">
+						<a href="#change-password-modal" data-toggle='modal'>修改密碼</a>
+					</li>
 				</ul>
 			</div>
 		</div>
 	</div>
 </div>
+<!-- modals -->
 <div id='import-modal' class="modal fade hide" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="false">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -71,5 +75,51 @@
     </div>
   </div>
 </div>
+
+<div id='change-password-modal' class="modal fade hide" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">修改密碼</h4>
+      </div>
+      <div class="modal-body">
+        <form id='change-password-form' role='form' method='post' action="<?=site_url()?>/system/change_password" data-remote="true">
+        	<div class="form-group">
+			    <label for="old_password">Old Password</label>
+			    <input name='old_password' type="password" class="form-control" id="old_password">
+			</div>
+		  	<div class="form-group">
+			    <label for="new_password">New Password</label>
+			    <input name='new_password' type="password" class="form-control" id="new_password">
+			</div>
+			<div class="form-group">
+			    <label for="confirm_password">Confirm Password</label>
+			    <input name='confirm_password' type="password" class="form-control" id="confirm_password">
+			</div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="$('#change-password-form').submit();">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+	$(function(){
+	    $('#change-password-form').submit(function(evnt){
+	    	if($('#new_password').val()!=$('#confirm_password').val())
+	    		alert('Password not match');
+	        $.post($(this).attr('action'),
+	        	$(this).serializeHash(),
+		        function (data) {
+		        	if(data=='error')return alert('password incorrect');
+		        	location.reload();
+		        });
+	        return false;
+    	});
+	});
+</script>
 <? } ?>
 <div class='layout'>

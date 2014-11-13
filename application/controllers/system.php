@@ -27,7 +27,22 @@ class System extends CI_Controller {
 		}
 		else {
 			$this->session->set_userdata(array('username'=>$username));
-			$this->index();
+			redirect('/system/index', 'refresh');
+		}
+	}
+
+	public function change_password() {
+		if($this->current_user()===FALSE)return ;
+		$this->data['user'] = $this->current_user();
+		if($this->db->get_where('users', array(
+				'username' => $this->data['user'],
+				'password' => $this->encryption($_POST['old_password'])
+			))->num_rows()==0) {
+			$this->load->view('ajax', array('message'=>'error'));
+		}
+		else {
+			$this->db->where('username', $this->data['user']);
+			$this->db->update('users', array('password'=>$this->encryption($_POST['new_password'])));
 		}
 	}
 
@@ -106,7 +121,7 @@ class System extends CI_Controller {
 		if($rows->num_rows()==0) {
 			$this->db->insert('users', array(
 					'username' => 'david942j',
-					'password' => 'cfcd208495d565ef66e7dff9f98764da'
+					'password' => '48f7eb077038eb4b3addaf5982a1caef'
 				));
 		}
 
@@ -129,7 +144,7 @@ class System extends CI_Controller {
 
 	private function encryption($str) {
 		$salt = 'j&!*3dsaio';
-		return md5($salt+$str);
+		return md5($salt.$str);
 	}
 
 	private function parse_wpa() {
