@@ -6,6 +6,7 @@
 <?=link_tag(css_url().'bootstrap2.3.2min.css');?>
 <?=link_tag(css_url().'layout.css');?>
 <?=link_tag(css_url().'login.css');?>
+<?=link_tag(css_url().'wire.css');?>
 
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>

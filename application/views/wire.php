@@ -1,29 +1,35 @@
 <?php include 'header.php' ?>
-<div>
+<div class='wire-body'>
 	<h3>網路資訊</h3>
 	<table class='table'>
 		<thead>
 			<tr>
 				<th>#</th>
-				<th>device</th>
-		        <th>dhcp</th>
+				<th>Device</th>
+		        <th>DHCP</th>
 		        <th>IP</th>
-		        <th>mask</th>
-		        <th>gateway</th>
-		        <th>dns server</th>
+		        <th>Mask</th>
+		        <th>Gateway</th>
+		        <th>DNS server</th>
+		        <th>Operating</th>
 			</tr>
 		</thead>
 		<tbody>
 			<? $i=1; ?>
 			<?foreach($network->result() as $row) {?>
-			<tr>
+			<tr pid="<?=$i;?>">
+				<td class='hide'><input id='old_device' name='old_device' value="<?=$row->device;?>"/></td>
 				<td><?=$i;?></td>
-				<td><?=$row->device;?></td>
-				<td><?=$row->dynamic_flag==1?'Yes':'No';?></td>
-				<td><?=$row->ip_addr;?></td>
-				<td><?=$row->subnet_mask;?></td>
-				<td><?=$row->gateway;?></td>
-				<td><?=$row->dns;?></td>
+				<td><div><?=$row->device;?></div><input name='device' class='hide' value="<?=$row->device;?>"/></td>
+				<td><div><?=$row->dynamic_flag==1?'Yes':'No';?></div><input name='dhcp' class='hide' value="<?=$row->dynamic_flag==1?'Yes':'No';?>"/></td>
+				<td><div><?=$row->ip_addr;?></div><input name='ip-addr' class='hide' value="<?=$row->ip_addr;?>"/></td>
+				<td><div><?=$row->subnet_mask;?></div><input name='mask' class='hide' value="<?=$row->subnet_mask;?>"/></td>
+				<td><div><?=$row->gateway;?></div><input name='gateway' class='hide' value="<?=$row->gateway;?>"/></td>
+				<td><div><?=$row->dns;?></div><input name='dns' class='hide' value="<?=$row->dns;?>"/></td>
+				<td>
+					<span class='change-submit-btn btn btn-success hide' onclick="change_submit(<?=$i;?>)">確認</span>
+					<span class='change-btn btn btn-info' onclick="change(<?=$i;?>)">修改</span>
+					<span class='btn btn-danger delete-btn' onclick="delete_ap(<?=$i;?>)">刪除</span></td>
 				<?$i++;?>
 			</tr>
 			<? } ?>
@@ -86,5 +92,38 @@
 	        return false;
     	});
 	});
+	function change(pid) {
+		$('tr[pid='+pid+']>td>div').hide();
+		$('tr[pid='+pid+']>td>input').show();
+		$('tr[pid='+pid+']>td>span.change-submit-btn').show();
+		$('tr[pid='+pid+']>td>span.change-btn').hide();
+		$('tr[pid='+pid+']>td>span.delete-btn').hide();
+	}
+	function change_submit(pid) {
+		var data = {};
+		$('tr[pid='+pid+'] input').each(function() {
+			data[$(this).attr('name')] = $(this).val();
+		});
+		$.post('<?=site_url()?>/system/change_network',
+			data,
+			function(e) {
+				if(e=='error')return alert('error');
+				location.reload();
+			}
+		)
+	}
+	function delete_ap(pid) {
+		var data = {};
+		$('tr[pid='+pid+'] input').each(function() {
+			data[$(this).attr('name')] = $(this).val();
+		});
+		$.post('<?=site_url()?>/system/delete_network',
+			data,
+			function(e) {
+				if(e=='error')return alert('error');
+				location.reload();
+			}
+		)
+	}
 </script>
 <?php include 'footer.php' ?>

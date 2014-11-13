@@ -54,6 +54,29 @@ class System extends CI_Controller {
 		$this->load->view('wire', $this->data);
 	}
 
+	public function change_network() {
+		if($this->current_user()===FALSE)return ;
+		$this->data['user'] = $this->current_user();
+
+		$data = array(
+			'device' => $_POST['device'],
+			'dynamic_flag' => $_POST['dhcp']=='Yes',
+			'ip_addr' => $_POST['ip-addr'],
+			'subnet_mask' => $_POST['mask'],
+			'gateway' => $_POST['gateway'],
+			'dns' => $_POST['dns']
+		);
+		$this->db->where('device',$_POST['old_device']);
+		$this->db->update('network', $data);
+	}
+
+	public function delete_network() {
+		if($this->current_user()===FALSE)return ;
+		$this->data['user'] = $this->current_user();
+
+		$this->db->delete('network', array('device'=>$_POST['old_device']));
+	}
+
 	public function new_network() {
 		$this->data['message'] = '';
 		$data = array(
