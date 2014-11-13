@@ -131,6 +131,26 @@ class System extends CI_Controller {
 		$this->load->view('ajax', $this->data);
 	}
 
+	public function do_ap_setting() {
+		if($this->current_user()===FALSE)return ;
+		$this->data['user'] = $this->current_user();
+
+		$file = fopen("/etc/wpa1.conf","w");
+		$arr = $this->get_ap_data();
+		//$this->load->view('ajax', array('message'=>$arr[0]['ssid']));
+		/*
+			network={
+				ssid="esys305-Dlink"
+				psk="305305abcd"
+				priority=7
+			}
+		*/
+		foreach($arr as $row) {
+			fprintf($file,"network={\n\tssid=\"%s\"\n\tpsk=\"%s\"\n\tpriority=%d\n}\n",$row['ssid'], $row['psk'], $row['priority']);
+		}
+		fclose($file);
+	}
+
 	public function import() {
 		if($this->current_user()===FALSE)return ;
 		$this->data['user'] = $this->current_user();
@@ -230,6 +250,19 @@ class System extends CI_Controller {
 				'subnet_mask' => $mask,
 				'gateway' => $gateway,
 				'dns' => $dns
+			);
+		}
+		return $ret;
+	}
+
+	private function get_ap_data() {
+		$data = $this->db->get('ap_list');
+		$ret = array();
+		foreach($data->result() as $row) {
+			$ret[] = array(
+				'ssid'=> $row->ssid,
+				'psk'=> $row->psk, 
+				'priority'=> $row->priority
 			);
 		}
 		return $ret;

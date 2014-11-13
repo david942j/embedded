@@ -34,6 +34,9 @@
 </div>
 
 <div class='btn btn-primary' data-toggle="modal" data-target="#new-ap-modal">新增無線網路</div>
+
+<div class='btn btn-warning' onclick="do_load_setting()">套用無線網路設定</div>
+
 <div id='new-ap-modal' class="modal fade hide" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="false">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -112,6 +115,16 @@
 				location.reload();
 			}
 		)
+	}
+
+	function do_load_setting() {
+		var r = confirm("會更改系统設定檔 確定修改?");
+		if(r==true) {
+			$.post('<?= site_url() ?>/system/do_ap_setting',{},function(e) {
+				console.log(e);
+			});
+		}
+		else return;
 	}
 </script>
 <?php include 'footer.php'; ?>

@@ -42,6 +42,13 @@
 							<li role="presentation"><a role="menuitem" tabindex="-1" href="<?= base_url() ?>database/sys">資料匯出</a></li>
 						</ul>
 					</li>
+					<li class="dropdown">
+						<a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">系統管理 <b class="caret"></b></a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+							<li role="presentation"><a role="menuitem" tabindex="-1" ></a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href=""></a></li>
+						</ul>
+					</li>
 				</ul>
 				<ul class="nav pull-right">
 					<li class="">

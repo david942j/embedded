@@ -7,7 +7,6 @@
     </fieldset>
     <fieldset id="actions">
         <input type="submit" id="submit" value="Log in">
-        <a href="">Forgot your password?</a><a href="">Register</a>
     </fieldset>
 </form>
 
