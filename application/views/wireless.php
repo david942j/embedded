@@ -121,7 +121,7 @@
 		var r = confirm("會更改系统設定檔 確定修改?");
 		if(r==true) {
 			$.post('<?= site_url() ?>/system/do_ap_setting',{},function(e) {
-				console.log(e);
+				//console.log(e);
 			});
 		}
 		else return;

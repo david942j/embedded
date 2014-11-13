@@ -90,6 +90,18 @@ class System extends CI_Controller {
 		$this->db->insert('network', $data);
 		$this->load->view('ajax', $this->data);
 	}
+	public function do_network_setting() {
+		if($this->current_user()===FALSE)return ;
+		$this->data['user'] = $this->current_user();
+
+		$device = $_POST['device'];
+		$data = $this->db->get_where('network',array('device'=>$device))->first_row();
+		//$this->load->view('ajax', array('message'=>"ifconfig $data->device $data->ip_addr"));
+		$this->data['message']=shell_exec("ifconfig ".$data->device." ".$data->ip_addr);
+		//$this->data['message']=(string)$data->num_rows();
+		//show_error($this->data['message']);
+		$this->load->view('ajax', $this->data);
+	}
 
 	public function wireless() {
 		if($this->current_user()===FALSE)return ;
@@ -137,7 +149,6 @@ class System extends CI_Controller {
 
 		$file = fopen("/etc/wpa1.conf","w");
 		$arr = $this->get_ap_data();
-		//$this->load->view('ajax', array('message'=>$arr[0]['ssid']));
 		/*
 			network={
 				ssid="esys305-Dlink"

@@ -29,7 +29,9 @@
 				<td>
 					<span class='change-submit-btn btn btn-success hide' onclick="change_submit(<?=$i;?>)">確認</span>
 					<span class='change-btn btn btn-info' onclick="change(<?=$i;?>)">修改</span>
-					<span class='btn btn-danger delete-btn' onclick="delete_ap(<?=$i;?>)">刪除</span></td>
+					<span class='btn btn-danger delete-btn' onclick="delete_ap(<?=$i;?>)">刪除</span>
+					<span class='btn btn-warning delete-btn' onclick="do_load_setting(<?=$i;?>)">套用</span>
+				</td>
 				<?$i++;?>
 			</tr>
 			<? } ?>
@@ -124,6 +126,21 @@
 				location.reload();
 			}
 		)
+	}
+	function do_load_setting(pid) {
+		var r = confirm("會更改網路設定 確定修改?");
+		if(r==true) {
+			var data = {};
+			$('tr[pid='+pid+'] input').each(function() {
+				data[$(this).attr('name')] = $(this).val();
+			});
+			console.log(data);
+			$.post('<?= site_url() ?>/system/do_network_setting',data,function(e) {
+				console.log(e);
+				alert('success');
+			});
+		}
+		else return;
 	}
 </script>
 <?php include 'footer.php' ?>
