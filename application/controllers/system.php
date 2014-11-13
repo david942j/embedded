@@ -75,6 +75,27 @@ class System extends CI_Controller {
 		$this->load->view('wireless', $this->data);
 	}
 
+	public function change_ap() {
+		if($this->current_user()===FALSE)return ;
+		$this->data['user'] = $this->current_user();
+
+		$data = array(
+			'ssid' => $_POST['ssid'],
+			'type' => $_POST['type'],
+			'psk' => $_POST['psk'],
+			'priority' => intval($_POST['priority'])
+		);
+		$this->db->where('ssid',$_POST['old_ssid']);
+		$this->db->update('ap_list', $data);
+	}
+
+	public function delete_ap() {
+		if($this->current_user()===FALSE)return ;
+		$this->data['user'] = $this->current_user();
+
+		$this->db->delete('ap_list', array('ssid'=>$_POST['old_ssid']));
+	}
+
 	public function new_ap() {
 		$this->data['message'] = '';
 		$data = array(

@@ -6,20 +6,26 @@
 			<tr>
 				<th>#</th>
 				<th>SSID</th>
-		        <th>type</th>
+		        <th>Type</th>
 		        <th>psk</th>
-		        <th>priority</th>
+		        <th>Priority</th>
+		        <th>Operating</th>
 			</tr>
 		</thead>
 		<tbody>
 			<? $i=1; ?>
 			<?foreach($wpa_conf->result() as $row) {?>
-			<tr>
+			<tr pid="<?=$i;?>">
+				<td class='hide'><input id='old_ssid' name='old_ssid' value="<?=$row->ssid;?>"/></td>
 				<td><?=$i;?></td>
-				<td><?=$row->ssid;?></td>
-				<td><?=$row->type;?></td>
-				<td><?=$row->psk;?></td>
-				<td><?=$row->priority;?></td>
+				<td><div><?=$row->ssid;?></div><input name='ssid' class='hide' value="<?=$row->ssid;?>"/></td>
+				<td><div><?=$row->type;?></div><input name='type' class='hide' value="<?=$row->type;?>"/></td>
+				<td><div><?=$row->psk;?></div><input name='psk' class='hide' value="<?=$row->psk;?>"/></td>
+				<td><div><?=$row->priority;?></div><input name='priority' class='hide' value="<?=$row->priority;?>"/></td>
+				<td>
+					<span class='change-submit-btn btn btn-success hide' onclick="change_submit(<?=$i;?>)">確認</span>
+					<span class='change-btn btn btn-info' onclick="change(<?=$i;?>)">修改</span>
+					<span class='btn btn-danger delete-btn' onclick="delete_ap(<?=$i;?>)">刪除</span></td>
 				<?$i++;?>
 			</tr>
 			<? } ?>
@@ -74,5 +80,38 @@
 	        return false;
     	});
 	});
+	function change(pid) {
+		$('tr[pid='+pid+']>td>div').hide();
+		$('tr[pid='+pid+']>td>input').show();
+		$('tr[pid='+pid+']>td>span.change-submit-btn').show();
+		$('tr[pid='+pid+']>td>span.change-btn').hide();
+		$('tr[pid='+pid+']>td>span.delete-btn').hide();
+	}
+	function change_submit(pid) {
+		var data = {};
+		$('tr[pid='+pid+'] input').each(function() {
+			data[$(this).attr('name')] = $(this).val();
+		});
+		$.post('<?=site_url()?>/system/change_ap',
+			data,
+			function(e) {
+				if(e=='error')return alert('error');
+				location.reload();
+			}
+		)
+	}
+	function delete_ap(pid) {
+		var data = {};
+		$('tr[pid='+pid+'] input').each(function() {
+			data[$(this).attr('name')] = $(this).val();
+		});
+		$.post('<?=site_url()?>/system/delete_ap',
+			data,
+			function(e) {
+				if(e=='error')return alert('error');
+				location.reload();
+			}
+		)
+	}
 </script>
 <?php include 'footer.php'; ?>
