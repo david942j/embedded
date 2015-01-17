@@ -16,7 +16,7 @@ module RbConfig
   CONFIG["PATCHLEVEL"] = "484"
   CONFIG["INSTALL"] = '/usr/bin/install -c'
   CONFIG["EXEEXT"] = ""
-  CONFIG["prefix"] = (TOPDIR || DESTDIR + "/home/khiav/ruby-1.9.3/ruby-1.9.3-p484-install")
+  CONFIG["prefix"] = (TOPDIR || DESTDIR + "/home/ctf/ruby-1.9.3-p484-install")
   CONFIG["ruby_install_name"] = "ruby"
   CONFIG["RUBY_INSTALL_NAME"] = "ruby"
   CONFIG["RUBY_SO_NAME"] = "ruby"
@@ -32,7 +32,7 @@ module RbConfig
   CONFIG["rubyhdrdir"] = "$(includedir)/$(RUBY_BASE_NAME)-$(ruby_version)"
   CONFIG["UNIVERSAL_INTS"] = ""
   CONFIG["UNIVERSAL_ARCHNAMES"] = ""
-  CONFIG["configure_args"] = " '--prefix=/home/khiav/ruby-1.9.3/ruby-1.9.3-p484-install' '--with-opt-dir=/home/khiav/libyaml/yaml-0.1.4-install'"
+  CONFIG["configure_args"] = " '--prefix=/home/ctf/ruby-1.9.3-p484-install' '--with-opt-dir=/home/ctf/yaml-0.1.4-install'"
   CONFIG["vendordir"] = "$(rubylibprefix)/vendor_ruby"
   CONFIG["sitedir"] = "$(rubylibprefix)/site_ruby"
   CONFIG["ruby_version"] = "1.9.1"
@@ -97,7 +97,7 @@ module RbConfig
   CONFIG["CCDLFLAGS"] = "-fPIC"
   CONFIG["STATIC"] = ""
   CONFIG["ARCH_FLAG"] = ""
-  CONFIG["DLDFLAGS"] = "-L/home/khiav/libyaml/yaml-0.1.4-install/lib  -Wl,-R/home/khiav/libyaml/yaml-0.1.4-install/lib "
+  CONFIG["DLDFLAGS"] = "-L/home/ctf/yaml-0.1.4-install/lib  -Wl,-R/home/ctf/yaml-0.1.4-install/lib "
   CONFIG["ALLOCA"] = ""
   CONFIG["POSTLINK"] = ":"
   CONFIG["WERRORFLAG"] = "-Werror"
@@ -138,8 +138,8 @@ module RbConfig
   CONFIG["CXXFLAGS"] = "$(cxxflags)"
   CONFIG["CXX"] = "g++"
   CONFIG["OBJEXT"] = "o"
-  CONFIG["CPPFLAGS"] = " $(DEFS) $(cppflags) -I/home/khiav/libyaml/yaml-0.1.4-install/include"
-  CONFIG["LDFLAGS"] = "-L.  -rdynamic -Wl,-export-dynamic -L/home/khiav/libyaml/yaml-0.1.4-install/lib  -Wl,-R/home/khiav/libyaml/yaml-0.1.4-install/lib "
+  CONFIG["CPPFLAGS"] = " $(DEFS) $(cppflags) -I/home/ctf/yaml-0.1.4-install/include"
+  CONFIG["LDFLAGS"] = "-L.  -rdynamic -Wl,-export-dynamic -L/home/ctf/yaml-0.1.4-install/lib  -Wl,-R/home/ctf/yaml-0.1.4-install/lib "
   CONFIG["CFLAGS"] = "$(cflags)"
   CONFIG["CC"] = "gcc"
   CONFIG["target_os"] = "linux"

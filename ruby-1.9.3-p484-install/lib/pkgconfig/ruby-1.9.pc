@@ -1,6 +1,6 @@
 arch=x86_64-linux
 sitearch=${arch}
-prefix=/home/khiav/ruby-1.9.3/ruby-1.9.3-p484-install
+prefix=/home/ctf/ruby-1.9.3-p484-install
 exec_prefix=${prefix}
 bindir=${exec_prefix}/bin
 libdir=${exec_prefix}/lib
@@ -22,7 +22,7 @@ LIBRUBYARG_SHARED=-Wl,-R -Wl,${libdir} -L${libdir}
 LIBRUBYARG_STATIC=-Wl,-R -Wl,${libdir} -L${libdir} -l${RUBY_SO_NAME}-static
 LIBRUBYARG=${LIBRUBYARG_STATIC}
 LIBS=-lpthread -lrt -ldl -lcrypt -lm 
-DLDFLAGS=-L/home/khiav/libyaml/yaml-0.1.4-install/lib  -Wl,-R/home/khiav/libyaml/yaml-0.1.4-install/lib 
+DLDFLAGS=-L/home/ctf/yaml-0.1.4-install/lib  -Wl,-R/home/ctf/yaml-0.1.4-install/lib 
 ruby=${bindir}/${RUBY_INSTALL_NAME}
 rubylibprefix=${libdir}/${RUBY_BASE_NAME}
 rubylibdir=${rubylibprefix}/${ruby_version}

@@ -1,4 +1,4 @@
-#!/home/khiav/ruby-1.9.3/ruby-1.9.3-p484-install/bin/ruby
+#!/home/ctf/ruby-1.9.3-p484-install/bin/ruby
 require 'test/unit'
 tests = Test::Unit::AutoRunner.new(true)
 tests.options.banner.sub!(/\[options\]/, '\& tests...')
